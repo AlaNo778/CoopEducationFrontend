@@ -1,0 +1,611 @@
+/* ================= Page container ================= */
+.page {
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+  /* เว้นซ้าย-ขวาเท่ากับ Navbar/Footer */
+  padding: 24px 7% 40px;
+  background-color: #f7f9fa;
+  min-height: 80vh;
+  box-sizing: border-box;
+}
+
+/* ================= Section 1.1: Welcome Banner ================= */
+.welcomeBanner {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(110deg, #2952e0 0%, #3d6dff 55%, #4a7bff 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 36px 40px;
+  box-shadow: 0 8px 24px rgba(41, 82, 224, 0.2);
+}
+
+.welcomeContent {
+  position: relative;
+  z-index: 2;
+}
+
+.welcomeTitle {
+  margin: 0 0 8px 0;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #ffffff;
+}
+
+.welcomeSubtitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* วงกลมตกแต่งด้านขวา */
+.decoCircle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decoCircle1 {
+  width: 260px;
+  height: 260px;
+  right: -70px;
+  top: -90px;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.decoCircle2 {
+  width: 180px;
+  height: 180px;
+  right: 40px;
+  bottom: -70px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.decoCircle3 {
+  width: 90px;
+  height: 90px;
+  right: 160px;
+  top: 30px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ================= Section 1.2: Stat Grid ================= */
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.statCard {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid #eef0f3;
+}
+
+.statCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.statIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+}
+
+/* ไอคอนสีของแต่ละการ์ด */
+.iconBlue {
+  background-color: #e8efff;
+  color: #3b6bff;
+}
+.iconPurple {
+  background-color: #f3e8ff;
+  color: #9333ea;
+}
+.iconGreen {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+.iconOrange {
+  background-color: #ffedd5;
+  color: #f97316;
+}
+
+/* ป้าย "ใหม่" */
+.statBadge {
+  font-size: 12px;
+  font-weight: 500;
+  color: #16a34a;
+  background-color: #dcfce7;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.statValue {
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* ================= Section 2: ฟังก์ชันหลัก ================= */
+.featureSection {
+  margin-top: 40px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.featureCard {
+  background-color: #ffffff;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  /* min-height: 180px; */
+}
+
+.featureCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.featureIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  color: #ffffff;
+}
+
+.featIconBlue {
+  background: linear-gradient(135deg, #3b6bff, #5b8aff);
+}
+.featIconPurple {
+  background: linear-gradient(135deg, #9333ea, #a855f7);
+}
+.featIconGreen {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+}
+.featIconOrange {
+  background: linear-gradient(135deg, #f97316, #fb923c);
+}
+.featIconTeal {
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+}
+.featIconPink {
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+}
+
+.featureArrow {
+  color: #9ca3af;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.featureTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.featureDescription {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.featureBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.badgeWarning {
+  background-color: #fff3e0;
+  color: #f97316;
+}
+
+.badgeDanger {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+/* ================= Section 3: เอกสารและแบบฟอร์ม ================= */
+
+/* ----- ตัวคั่น pill ด้านบน ----- */
+.docDivider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 56px 0 28px;
+}
+
+.docDividerLine {
+  flex: 1;
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+.docAnchorPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.docAnchorPill svg {
+  color: #3b6bff;
+}
+
+/* ----- Section header ----- */
+.docSection {
+  margin-top: 4px;
+}
+
+.docHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.docHeaderTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.docHeaderActions {
+  display: flex;
+  gap: 10px;
+}
+
+.btnDownloadAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.btnDownloadAll:hover {
+  filter: brightness(1.05);
+}
+
+/* ----- Document grid ----- */
+.docGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.docCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #ffffff;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  padding: 16px 20px;
+  min-height: 80px;
+}
+
+.docCardFull {
+  grid-column: 1 / -1;
+}
+
+/* ----- PDF icon ----- */
+.docIcon {
+  width: 48px;
+  height: 56px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.docIconLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.docIconBlue {
+  background-color: #e8efff;
+  color: #3b6bff;
+}
+.docIconRed {
+  background-color: #ffe4e6;
+  color: #e11d48;
+}
+.docIconGreen {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+.docIconOrange {
+  background-color: #ffedd5;
+  color: #f97316;
+}
+.docIconPink {
+  background-color: #fce7f3;
+  color: #db2777;
+}
+.docIconTeal {
+  background-color: #ccfbf1;
+  color: #0d9488;
+}
+
+/* ----- Info section ----- */
+.docInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.docTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+}
+
+.docDescription {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+}
+
+.docMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12px;
+  color: #9ca3af;
+  align-items: center;
+}
+
+.docMetaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.docImportantBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background-color: #fef3c7;
+  color: #d97706;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ----- Action buttons ----- */
+.docActions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.docBtnDownload,
+.docBtnSendDoc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  min-width: 110px;
+  font-family: inherit;
+}
+
+.docBtnDownload {
+  background-color: #dbeafe;
+  color: #2563eb;
+  border: #fff;
+}
+
+.docBtnDownload:hover {
+  background-color: #bfdbfe;
+}
+
+.docBtnSendDoc {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.docBtnSendDoc:hover {
+  background-color: #e5e7eb;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 1024px) {
+  .statGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .featureGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .docGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .welcomeBanner {
+    padding: 28px 24px;
+  }
+  .welcomeTitle {
+    font-size: 24px;
+  }
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+  .featureGrid {
+    grid-template-columns: 1fr;
+  }
+  .docCard {
+    flex-wrap: wrap;
+  }
+  .docActions {
+    flex-direction: row;
+    width: 100%;
+  }
+  .docBtnDownload,
+  .docBtnSendDoc {
+    flex: 1;
+  }
+  .docHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* ================= Entrance animations ================= */
+.welcomeBanner {
+  animation: fadeDown .6s ease both;
+}
+
+.statCard {
+  animation: slideUp .6s ease both;
+}
+.statCard:nth-child(1) { animation-delay: .1s; }
+.statCard:nth-child(2) { animation-delay: .2s; }
+.statCard:nth-child(3) { animation-delay: .3s; }
+.statCard:nth-child(4) { animation-delay: .4s; }
+
+.featureSection .sectionHeader {
+  animation: fadeDown .5s .4s ease both;
+}
+
+.featureCard {
+  animation: slideUp .6s ease both;
+}
+.featureCard:nth-child(1) { animation-delay: .5s; }
+.featureCard:nth-child(2) { animation-delay: .55s; }
+.featureCard:nth-child(3) { animation-delay: .6s; }
+.featureCard:nth-child(4) { animation-delay: .65s; }
+.featureCard:nth-child(5) { animation-delay: .7s; }
+.featureCard:nth-child(6) { animation-delay: .75s; }
+
+.docDivider {
+  animation: fadeDown .5s .8s ease both;
+}
+
+.docSection .docHeader {
+  animation: fadeDown .5s .85s ease both;
+}
+
+.docCard {
+  animation: slideUp .5s ease both;
+}
+.docCard:nth-child(1) { animation-delay: .9s; }
+.docCard:nth-child(2) { animation-delay: .95s; }
+.docCard:nth-child(3) { animation-delay: 1s; }
+.docCard:nth-child(4) { animation-delay: 1.05s; }
+.docCard:nth-child(5) { animation-delay: 1.1s; }
+.docCard:nth-child(6) { animation-delay: 1.15s; }
+.docCard:nth-child(7) { animation-delay: 1.2s; }
+.docCard:nth-child(8) { animation-delay: 1.25s; }
+.docCard:nth-child(9) { animation-delay: 1.3s; }
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

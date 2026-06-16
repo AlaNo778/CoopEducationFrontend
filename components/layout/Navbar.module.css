@@ -1,0 +1,102 @@
+body{
+  margin: 0;
+  padding: 0;
+  background-color: #f7f9fa;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 7%;
+  background-color: #ffffff; 
+  color: var(--text-dark);
+  font-family: 'Prompt', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  width: auto;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+  height: auto;
+}
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 1;
+    animation: fadeDown .6s ease both;
+  }
+  .brandNameMain {
+    font-size: 17px;
+    letter-spacing: .3px;
+  }
+  .brandNameSub {
+    font-size: 13px;
+    letter-spacing: .3px;
+    font-weight: 400;    
+  }
+
+  .brandIconImg {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 0 4px 10px #4f46e540;
+}
+  .brandNameContainer {
+    display: flex;
+    flex-direction: column;
+  }
+.infoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.nameText {
+    font-size: 17px;
+    letter-spacing: .3px;
+    font-weight: 400;
+}
+.roletext {
+    font-size: 13px;
+    letter-spacing: .3px;
+    font-weight: 400;
+}
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.logoutIcon button{
+  background-color: #fef2f2;
+  color: red;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.logoutIcon button:hover {
+  background-color: #f8d3d3;
+  color: red;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.divider{
+  width: 2px;
+  height: 5vh;
+  background: #d3d3d3;
+  opacity: 0.4;
+}
+
