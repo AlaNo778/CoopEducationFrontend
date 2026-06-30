@@ -4,18 +4,17 @@ import {
   LuFileText,
   LuBuilding2,
   LuUser,
-  LuContact,
   LuCalendarDays,
   LuClipboardList,
   LuBookOpen,
   LuArrowRight,
   LuDownload,
-  LuEye,
   LuStar, 
 } from "react-icons/lu";
-import { FiSend } from "react-icons/fi";
-import { fetchDocument,fetchAllDocuments } from "../../../services/docService";
+import { FiUploadCloud } from "react-icons/fi";
+import { fetchDocument, fetchAllDocuments, uploadDocument, fetchDocumentExist } from "../../../services/docService";
 import type { UserInfo } from "@/lib/auth";
+import { useEffect, useState } from "react";
 
 /* ============ Section 2: ฟังก์ชันหลัก ============ */
 type Feature = {
@@ -28,7 +27,6 @@ type Feature = {
 };
 
 
-
 const features: Feature[] = [
   {
     key: "profile",
@@ -36,7 +34,7 @@ const features: Feature[] = [
     iconClass: "featIconBlue",
     title: "ข้อมูลโปรไฟล์",
     description: "จัดการข้อมูลส่วนตัวและประวัติการศึกษา",
-    href: "#",
+    href: "/profile",
   },
   {
     key: "company-info",
@@ -78,7 +76,6 @@ type DocItem = {
   iconClass: string;
   title: string;
   description: string;
-  hrefSendDoc: string;
   docId?: number;
   important?: boolean;
   fullWidth?: boolean;
@@ -91,14 +88,12 @@ const documents: DocItem[] = [
     title: "แบบฟอร์มแจ้งความประสงค์ไปปฏิบัติสหกิจศึกษา",
     description: "แบบฟอร์มสำหรับแจ้งความประสงค์เข้าร่วมโครงการสหกิจศึกษา",
     docId: 15,
-    hrefSendDoc: "#",
   },
   {
     key: "sc-01",
     iconClass: "docIconRed",
     title: "Sc.สก-01",
     description: "แบบฟอร์มขอความอนุเคราะห์รับนักศึกษาเข้าปฏิบัติงานสหกิจศึกษา",
-    hrefSendDoc: "#",
     docId: 1,
   },
   {
@@ -106,7 +101,6 @@ const documents: DocItem[] = [
     iconClass: "docIconGreen",
     title: "Sc.สก-03",
     description: "แบบฟอร์มบันทึกข้อตกลงความร่วมมือ",
-    hrefSendDoc: "#",
     docId: 3,
   },
   {
@@ -114,7 +108,6 @@ const documents: DocItem[] = [
     iconClass: "docIconOrange",
     title: "Sc.สก-04",
     description: "แบบฟอร์มรายละเอียดการปฏิบัติงานสหกิจศึกษา",
-    hrefSendDoc: "#",
     docId: 4,
   },
   {
@@ -122,7 +115,6 @@ const documents: DocItem[] = [
     iconClass: "docIconGreen",
     title: "Sc.สก-11",
     description: "แบบฟอร์มประเมินผลการปฏิบัติงานโดยพนักงานพี่เลี้ยง",
-    hrefSendDoc: "#",
     docId: 11,
   },
   {
@@ -130,7 +122,6 @@ const documents: DocItem[] = [
     iconClass: "docIconPink",
     title: "Sc.สก-12",
     description: "แบบฟอร์มประเมินผลการปฏิบัติงานโดยอาจารย์นิเทศ",
-    hrefSendDoc: "#",
     docId: 12,
   },
   {
@@ -138,7 +129,6 @@ const documents: DocItem[] = [
     iconClass: "docIconBlue",
     title: "Sc.สก-13",
     description: "แบบฟอร์มประเมินสถานประกอบการ",
-    hrefSendDoc: "#",
     docId: 13,
   },
   {
@@ -146,7 +136,6 @@ const documents: DocItem[] = [
     iconClass: "docIconRed",
     title: "Sc.สก-14",
     description: "แบบฟอร์มรายงานผลการปฏิบัติงานสหกิจศึกษา",
-    hrefSendDoc: "#",
     docId: 14,
   },
   {
@@ -154,7 +143,6 @@ const documents: DocItem[] = [
     iconClass: "docIconTeal",
     title: "หนังสือยินยอมให้นักศึกษาไปปฏิบัติสหกิจศึกษา/ฝึกประสบการณ์ทำงาน",
     description: "เอกสารหนังสือยินยอมจากผู้ปกครองสำหรับนักศึกษาที่จะเข้าร่วมโครงการสหกิจศึกษา",
-    hrefSendDoc: "#",
     docId: 31,
     important: true,
     fullWidth: true,
@@ -167,6 +155,64 @@ type Props = {
 
 export default function StudentDashboard({ userInfo }: Props) {
   const fullName = userInfo?.fullName ?? "—";
+  const [uploadedDocIds, setUploadedDocIds] = useState<number[]>([]);
+  const [uploadingDocId, setUploadingDocId] = useState<number | null>(null);
+
+  async function handleSendDocument(doc: DocItem) {
+    if (!doc.docId) return;
+
+    // สร้าง file input element
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".pdf,.doc,.docx";
+
+    fileInput.onchange = async (e) => {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+
+      if (!file) return;
+
+      // เก็บ docId เป็นตัวแปรท้องถิ่น เพื่อความแน่นอนเมื่อใช้งานข้าม async
+      const docId = doc.docId;
+      if (!docId) return;
+
+      try {
+        setUploadingDocId(docId);
+
+        // อัพโหลดไฟล์
+        const result = await uploadDocument(file, docId);
+        console.log("Upload result:", result);
+
+        // ดึงรายการ docId ที่อัพโหลด แล้วอัพเดต state
+        const documentIds = await fetchDocumentExist();
+        setUploadedDocIds(documentIds);
+
+        // แจ้งเตือนที่หน้าจอเมื่อเสร็จ
+        alert(`อัพโหลด "${doc.title}" สำเร็จแล้ว`);
+      } catch (error) {
+        console.error("Upload failed:", error);
+        alert("อัพโหลดไม่สำเร็จ กรุณาลองใหม่");
+      } finally {
+        // เอา spinner ออกเมื่อเสร็จไม่ว่าจะสำเร็จหรือไม่
+        setUploadingDocId(null);
+      }
+    };
+
+    fileInput.click();
+  }
+
+  // ดึงสถานะเอกสารที่มีเมื่อเข้ามาหน้า dashboard
+  useEffect(() => {
+    let mounted = true;
+    fetchDocumentExist()
+      .then((ids) => {
+        if (mounted) setUploadedDocIds(ids);
+      })
+      .catch((err) => console.error("fetchDocumentExist on mount failed", err));
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   async function handleDownload(doc: DocItem) {
     if (!doc.docId) return;
@@ -289,10 +335,32 @@ export default function StudentDashboard({ userInfo }: Props) {
                       </button>
                     )}
 
-                    {doc.hrefSendDoc && (
-                      <a href={doc.hrefSendDoc} className={styles.docBtnSendDoc}>
-                        <FiSend /> ส่งเอกสาร
-                      </a>
+                    {doc.docId && (
+                      <button
+                        type="button"
+                        className={styles.docBtnSendDoc}
+                        onClick={() => handleSendDocument(doc)}
+                        disabled={uploadingDocId !== null && uploadingDocId !== doc.docId}
+                      >
+                        {uploadingDocId === doc.docId ? (
+                          <>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 50 50" style={{ marginLeft: 8 }} aria-hidden>
+                              <g transform="translate(25 25)">
+                                <g>
+                                  <path d="M0,-20 A20,20 0 0,1 17.32,-10" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+                                  <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0" to="360" dur="0.9s" repeatCount="indefinite" />
+                                </g>
+                              </g>
+                            </svg>
+                            <span style={{ marginLeft: 6 }}>กำลังอัปโหลด...</span>
+                          </>
+                        ) : (
+                          <>
+                            <FiUploadCloud />
+                            <span style={{ marginLeft: 6 }}>{uploadedDocIds.includes(doc.docId) ? "อัปโหลดใหม่" : "อัปโหลด"}</span>
+                          </>
+                        )}
+                      </button>
                     )}
               </div>
             </div>

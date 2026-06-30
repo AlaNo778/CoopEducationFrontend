@@ -34,4 +34,45 @@ export async function fetchAllDocuments(): Promise<Blob> {
     return await res.blob();
 }
 
-export default { fetchDocument, fetchAllDocuments };
+export async function uploadDocument(file: File, docId: number): Promise<string> {
+    const base = (API_URL ?? "").replace(/\/$/, "");
+    const url = `${base}/SubmitForm`;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("docId", docId.toString());
+
+    const res = await fetch(url, {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("uploadDocument failed", res.status, text);
+    throw new Error(`Failed to upload document: ${res.status} ${text}`);
+  }
+
+  return await res.text();
+
+}
+export async function fetchDocumentExist(): Promise<number[]> {
+    const base = (API_URL ?? "").replace(/\/$/, "");
+    const url = `${base}/DocumentInfo`;
+
+    const res = await fetch(url, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    if (!res.ok) {
+        const text = await res.text();
+        console.error("fetchDocumentExist failed", res.status, text);
+        throw new Error(`Failed to check document existence: ${res.status} ${text}`);
+    }
+
+    return await res.json();
+}
+
+export default { fetchDocument, fetchAllDocuments, uploadDocument, fetchDocumentExist };

@@ -1,0 +1,279 @@
+/* ===========================
+   Fonts & Keyframes
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&family=Sarabun:wght@400;600&display=swap');
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ===========================
+   Page Layout
+=========================== */
+.page {
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+  padding: 24px 7% 40px;
+  background-color: #f7f9fa;
+  min-height: 80vh;
+  box-sizing: border-box;
+  animation: fadeIn 0.4s ease both;
+}
+
+/* ===========================
+   Welcome Header
+=========================== */
+.welcomeContent {
+  animation: fadeInDown 0.5s ease both;
+}
+
+.welcomeTitle {
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.welcomeSubtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 4px 0 0;
+}
+
+/* ===========================
+   Main Content Card
+=========================== */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  padding: 24px;
+  color: inherit;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  animation: fadeInUp 0.5s ease 0.1s both;
+  transition: box-shadow 0.3s ease;
+}
+
+.content:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ===========================
+   Section Titles
+=========================== */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.profileCardTitle,
+.contactCardTitle,
+.AddressCardTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.profileCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.editButton,
+.saveButton,
+.cancelButton {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editButton {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.editButton:hover {
+  background-color: #1d4ed8;
+}
+
+.saveButton {
+  background-color: #16a34a;
+  color: #fff;
+}
+
+.saveButton:hover {
+  background-color: #15803d;
+}
+
+.cancelButton {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.cancelButton:hover {
+  background-color: #d1d5db;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* .profileCardTitle::after,
+.contactCardTitle::after,
+.AddressCardTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.profileCard:hover .profileCardTitle::after,
+.contactCard:hover .contactCardTitle::after,
+.AddressCard:hover .AddressCardTitle::after {
+  width: 100%;
+} */
+
+/* ===========================
+   Contact & Address Layout
+=========================== */
+.contactAndAddressContent {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.contactContent,
+.AddressContent {
+  flex: 1 1 0;
+  min-width: 0;
+  animation: fadeInUp 0.5s ease 0.2s both;
+}
+
+/* ===========================
+   Field Grid
+=========================== */
+.profileCardContent,
+.contactCardContent,
+.AddressCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profileCardContentRow1,
+.profileCardContentRow2,
+.contactCardContentRow1,
+.contactCardContentRow2,
+.contactCardContentRow3,
+.AddressCardContentRow1,
+.AddressCardContentRow2,
+.AddressCardContentRow3,
+.AddressCardContentRow4 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* ===========================
+   Profile Field
+=========================== */
+.profileField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 220px;
+  flex: 1;
+}
+
+.profileCardContentTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.profileCardContentInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  color: #111827;
+  box-sizing: border-box;
+  cursor: default;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profileCardContentInput:focus {
+  outline: none;
+  border-color: #6366f1;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* ===========================
+   Dividers
+=========================== */
+.divider1 {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+  margin: 24px 0;
+  border: none;
+  animation: fadeIn 0.5s ease both;
+}
+
+.divider2 {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, #e5e7eb, transparent);
+  align-self: stretch;
+}

@@ -9,10 +9,16 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@untitledui/file-icons": "^0.0.9",
+    "@untitledui/icons": "^0.0.22",
+    "motion": "^12.40.0",
     "next": "16.2.2",
     "react": "19.2.4",
+    "react-aria": "^3.49.0",
+    "react-aria-components": "^1.18.0",
     "react-dom": "19.2.4",
-    "react-icons": "^5.6.0"
+    "react-icons": "^5.6.0",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

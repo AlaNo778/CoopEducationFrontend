@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import styles from "./Navbar.module.css";
 import type { Role } from "@/types/auth";
 import type { UserInfo } from "@/lib/auth";
@@ -20,6 +21,25 @@ const ROLE_LABEL_TH: Record<Role, string> = {
 
 export default function Navbar({ userInfo }: Props) {
   const router = useRouter();
+  const [displayName, setDisplayName] = useState(userInfo?.fullName ?? "—");
+  const [displayRole, setDisplayRole] = useState(userInfo ? ROLE_LABEL_TH[userInfo.roleName] ?? "—" : "—");
+
+  useEffect(() => {
+    setDisplayName(userInfo?.fullName ?? "—");
+    setDisplayRole(userInfo ? ROLE_LABEL_TH[userInfo.roleName] ?? "—" : "—");
+  }, [userInfo]);
+
+  useEffect(() => {
+    const handleProfileUpdate = (event: Event) => {
+      const customEvent = event as CustomEvent<{ fullName?: string }>;
+      if (customEvent.detail?.fullName) {
+        setDisplayName(customEvent.detail.fullName);
+      }
+    };
+
+    window.addEventListener("profile-updated", handleProfileUpdate);
+    return () => window.removeEventListener("profile-updated", handleProfileUpdate);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -33,8 +53,8 @@ export default function Navbar({ userInfo }: Props) {
 
   // ถ้าดึง userInfo ไม่ได้ (token พัง / backend ล่ม) แสดง placeholder
   // ไม่เด้งออก login ที่ชั้นนี้ เพราะ middleware จัดการ auth flow อยู่แล้ว
-  const fullName = userInfo?.fullName ?? "—";
-  const roleLabel = userInfo ? ROLE_LABEL_TH[userInfo.roleName] ?? "—" : "—";
+  const fullName = displayName;
+  const roleLabel = displayRole;
 
   return (
     <nav className={styles.navbar}>

@@ -490,6 +490,7 @@
 .docBtnSendDoc {
   background-color: #f3f4f6;
   color: #374151;
+  border: #fff;
 }
 
 .docBtnSendDoc:hover {
@@ -608,4 +609,7 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
