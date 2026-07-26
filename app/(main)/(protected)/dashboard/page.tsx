@@ -13,9 +13,9 @@ export default async function DashboardPage() {
   
   if (!role) return redirect("/login");
   if (role === "student") return <StudentDashboard userInfo={userInfo} />;
-  if (role === "teacher") return <TeacherDashboard />;
-  if (role === "admin") return <AdminDashboard />;
-  if (role === "staff") return <StaffDashboard />; 
+  if (role === "teacher") return <TeacherDashboard userInfo={userInfo} />;
+  if (role === "admin") return <AdminDashboard  />;
+  if (role === "staff") return <StaffDashboard  />; 
 
   return <div>No access</div>;
 }

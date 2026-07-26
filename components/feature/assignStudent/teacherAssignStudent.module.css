@@ -1,0 +1,222 @@
+.page{
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+  padding: 24px 7% 40px;
+  background-color: #f7f9fa;
+  min-height: 80vh;
+  box-sizing: border-box;
+  animation: fadeIn 0.85s ease-in-out both;
+}
+.header{
+    display: flex;
+    flex-direction: column;
+    /* margin-bottom: 100px */
+}
+.title{
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+.subTitle{
+   font-size: 16px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 4px 0 0; 
+}
+
+
+.assignStudentBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.content{
+    display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  padding: 24px;
+  color: inherit;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  animation: fadeInUp 0.9s ease-in-out 0.08s both;
+  transition: box-shadow 0.72s ease-in-out;
+}
+
+/* =========================================================
+   Card list — 3 การ์ดเรียงแนวนอน
+   ========================================================= */
+.studentCard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================================
+   Single card
+   ========================================================= */
+.Card {
+  position: relative;
+  width: 300px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* badge สถานะ มุมขวาบน */
+.statusBadge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+/* พื้นหลังไล่สีด้านบน อยู่หลังรูปโปรไฟล์ */
+.topCanvas {
+  height: 90px;
+  background: linear-gradient(180deg, #f7f9fa 0%, #ffffff 100%);
+}
+
+/* วงกลมรูปโปรไฟล์ ลอยคาบเส้นแบ่งระหว่าง topCanvas / bottomCanvas */
+.circle {
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 96px;
+  height: 96px;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+  z-index: 1;
+}
+
+/* ไอคอนแทนรูปโปรไฟล์ (ใช้ก่อนจนกว่าจะต่อรูปจริง) */
+.innerCircleProfile {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #eef1f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa4b2;
+  overflow: hidden;
+}
+
+.innerCircleProfile svg {
+  width: 52%;
+  height: 52%;
+}
+
+.bottomCanvas {
+  padding: 56px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.underFrofile {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fullName {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.studentCode {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2f6fed;
+}
+
+.majorName {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.companyAndduration {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.companyName,
+.priod {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #374151;
+  text-align: left;
+}
+
+.companyName svg,
+.priod svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #6b7280;
+}
+
+.btnDetail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #2f6fed;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2f6fed;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btnDetail svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btnDetail:hover {
+  background: #2f6fed;
+  color: #ffffff;
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 640px) {
+  .studentCard {
+    flex-direction: column;
+  }
+  .Card {
+    width: 100%;
+  }
+}

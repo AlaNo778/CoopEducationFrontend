@@ -39,14 +39,14 @@
   background-color: #f7f9fa;
   min-height: 80vh;
   box-sizing: border-box;
-  animation: fadeIn 0.4s ease both;
+  animation: fadeIn 0.9s ease-in-out both;
 }
 
 /* ===========================
    Welcome Header
 =========================== */
 .welcomeContent {
-  animation: fadeInDown 0.5s ease both;
+  animation: fadeInDown 1s ease-in-out both;
 }
 
 .welcomeTitle {
@@ -77,8 +77,8 @@
   padding: 24px;
   color: inherit;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  animation: fadeInUp 0.5s ease 0.1s both;
-  transition: box-shadow 0.3s ease;
+  animation: fadeInUp 1s ease-in-out 0.1s both;
+  transition: box-shadow 0.8s ease-in-out;
 }
 
 .content:hover {
@@ -124,7 +124,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.7s ease-in-out;
 }
 
 .editButton {
@@ -195,7 +195,7 @@
 .AddressContent {
   flex: 1 1 0;
   min-width: 0;
-  animation: fadeInUp 0.5s ease 0.2s both;
+  animation: fadeInUp 1s ease-in-out 0.2s both;
 }
 
 /* ===========================
@@ -239,7 +239,7 @@
   font-weight: 600;
   color: #374151;
   margin: 0;
-  transition: color 0.2s ease;
+  transition: color 0.7s ease-in-out;
 }
 
 .profileCardContentInput {
@@ -251,7 +251,7 @@
   color: #111827;
   box-sizing: border-box;
   cursor: default;
-  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.7s ease-in-out, background-color 0.7s ease-in-out, box-shadow 0.7s ease-in-out;
 }
 
 .profileCardContentInput:focus {
@@ -267,13 +267,46 @@
 .divider1 {
   height: 1px;
   background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
-  margin: 24px 0;
+  /* margin: 24px 0; */
   border: none;
-  animation: fadeIn 0.5s ease both;
+  animation: fadeIn 1s ease-in-out both;
 }
 
 .divider2 {
   width: 1px;
   background: linear-gradient(180deg, transparent, #e5e7eb, transparent);
   align-self: stretch;
+  animation: fadeIn 1s ease-in-out both;
+}
+.navigationBar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background-color: #f7f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dashboardButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: #111827;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.7s ease-in-out, color 0.7s ease-in-out;
+}
+
+.dashboardButton:hover {
+  background-color: #eef2ff;
+  color: #4338ca;
 }

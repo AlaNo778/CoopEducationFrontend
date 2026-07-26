@@ -12,7 +12,7 @@ export function base64UrlDecode(str: string) {
 				})
 				.join("")
 		);
-	} catch (e) {
+	} catch{
 		return atob(str);
 	}
 }
@@ -33,7 +33,7 @@ export function getUserIdFromToken(): number | null {
 		if (!sub) return null;
 		const n = Number(sub);
 		return Number.isNaN(n) ? null : n;
-	} catch (e) {
+	} catch{
 		return null;
 	}
 }

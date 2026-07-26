@@ -1,5 +1,5 @@
 'use client'
-import styles from "./StudentDashboard.module.css";
+import styles from "./Dashboard.module.css";
 import {
   LuFileText,
   LuBuilding2,
@@ -33,7 +33,7 @@ const features: Feature[] = [
     icon: <LuUser />,
     iconClass: "featIconBlue",
     title: "ข้อมูลโปรไฟล์",
-    description: "จัดการข้อมูลส่วนตัวและประวัติการศึกษา",
+    description: "จัดการข้อมูลส่วนตัวและข้อมูลติดต่อ",
     href: "/profile",
   },
   {
@@ -42,7 +42,7 @@ const features: Feature[] = [
     iconClass: "featIconPurple",
     title: "ข้อมูลสถานสหกิจ",
     description: "ดูรายละเอียดสถานประกอบการที่ปฏิบัติงาน",
-    href: "#",
+    href: "/co-operation",
   },
   {
     key: "supervisor-appointment",
@@ -58,7 +58,7 @@ const features: Feature[] = [
     iconClass: "featIconTeal",
     title: "ส่งรายงานประจำสัปดาห์",
     description: "บันทึกและส่งรายงานการปฏิบัติงานรายสัปดาห์",
-    href: "#",
+    href: "/weeklyReport",
   },
   {
     key: "final-report",
@@ -66,7 +66,7 @@ const features: Feature[] = [
     iconClass: "featIconPink",
     title: "ส่งรูปเล่มรายงาน",
     description: "อัปโหลดรูปเล่มรายงานฉบับสมบูรณ์",
-    href: "#",
+    href: "/report",
   },
 ];
 
@@ -161,10 +161,9 @@ export default function StudentDashboard({ userInfo }: Props) {
   async function handleSendDocument(doc: DocItem) {
     if (!doc.docId) return;
 
-    // สร้าง file input element
     const fileInput = document.createElement("input");
     fileInput.type = "file";
-    fileInput.accept = ".pdf,.doc,.docx";
+    fileInput.accept = ".pdf";
 
     fileInput.onchange = async (e) => {
       const target = e.target as HTMLInputElement;
@@ -172,36 +171,26 @@ export default function StudentDashboard({ userInfo }: Props) {
 
       if (!file) return;
 
-      // เก็บ docId เป็นตัวแปรท้องถิ่น เพื่อความแน่นอนเมื่อใช้งานข้าม async
       const docId = doc.docId;
       if (!docId) return;
 
       try {
         setUploadingDocId(docId);
 
-        // อัพโหลดไฟล์
         const result = await uploadDocument(file, docId);
         console.log("Upload result:", result);
 
-        // ดึงรายการ docId ที่อัพโหลด แล้วอัพเดต state
-        const documentIds = await fetchDocumentExist();
-        setUploadedDocIds(documentIds);
-
-        // แจ้งเตือนที่หน้าจอเมื่อเสร็จ
         alert(`อัพโหลด "${doc.title}" สำเร็จแล้ว`);
       } catch (error) {
         console.error("Upload failed:", error);
         alert("อัพโหลดไม่สำเร็จ กรุณาลองใหม่");
       } finally {
-        // เอา spinner ออกเมื่อเสร็จไม่ว่าจะสำเร็จหรือไม่
-        setUploadingDocId(null);
       }
     };
 
     fileInput.click();
   }
 
-  // ดึงสถานะเอกสารที่มีเมื่อเข้ามาหน้า dashboard
   useEffect(() => {
     let mounted = true;
     fetchDocumentExist()

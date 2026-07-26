@@ -1,0 +1,340 @@
+/* ================= Page container ================= */
+.page {
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+  padding: 24px 7% 40px;
+  background-color: #f7f9fa;
+  min-height: 80vh;
+  box-sizing: border-box;
+  animation: pageFadeIn 0.6s ease-out both;
+}
+.bgGrid{
+  background-color: #f7f9fa;
+  padding: 15px;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  animation: panelFadeIn 0.7s ease-out both;
+}
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+/* ----- Section header ----- */
+.docSection {
+  margin-top: 4px;
+}
+
+.docHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.docHeaderTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+/* ----- Document grid ----- */
+.docGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.docCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #ffffff;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  padding: 16px 20px;
+  min-height: 80px;
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+  will-change: transform;
+}
+
+.docCard:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  border-color: #dbeafe;
+}
+/* ----- PDF icon ----- */
+.docIcon {
+  width: 48px;
+  height: 56px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.docIconLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.docIconPurple {
+  background-color: #f3e8ff;
+  color: #9333ea;
+}
+.docIconYellow {
+  background-color: #fef9c3;
+  color: #ca8a04;
+}
+.docIconIndigo {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+.docIconCyan {
+  background-color: #cffafe;
+  color: #0891b2;
+}
+.docIconLime {
+  background-color: #ecfccb;
+  color: #65a30d;
+}
+.docIconAmber {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+.docIconRose {
+  background-color: #fecdd3;
+  color: #be123c;
+}
+.docIconViolet {
+  background-color: #ede9fe;
+  color: #7c3aed;
+}
+.docIconEmerald {
+  background-color: #d1fae5;
+  color: #059669;
+}
+.docIconSky {
+  background-color: #e0f2fe;
+  color: #0284c7;
+}
+
+/* ----- Info section ----- */
+.docInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.docTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+}
+
+.docDescription {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+}
+/* ----- Action buttons ----- */
+.docActions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.docBtnPreview,
+.docBtnSendDoc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  min-width: 110px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.docBtnSendDoc {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: #fff;
+}
+
+.docBtnSendDoc:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+}
+.docBtnPreview {
+  background-color: #dbeafe;
+  color: #2563eb;
+  border: #fff;
+}
+.docBtnPreview:hover{
+  background-color: rgb(168, 190, 250);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.16);
+}
+
+.docBtnPreview:active,
+.docBtnSendDoc:active {
+  transform: scale(0.98);
+}
+/* ================= Responsive ================= */
+@media (max-width: 1024px) {
+  .docGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+  .featureGrid {
+    grid-template-columns: 1fr;
+  }
+  .docCard {
+    flex-wrap: wrap;
+  }
+  .docActions {
+    flex-direction: row;
+    width: 100%;
+  }
+  .docBtnPreview,
+  .docBtnSendDoc {
+    flex: 1;
+  }
+  .docHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+.featureSection .sectionHeader {
+  animation: fadeDown .5s .4s ease both;
+}
+
+.docSection .docHeader {
+  animation: fadeDown .5s .85s ease both;
+}
+
+.docCard {
+  animation: slideUp .5s ease both;
+}
+.docCard:nth-child(1)  { animation-delay: 0.50s; }
+.docCard:nth-child(2)  { animation-delay: 0.55s; }
+.docCard:nth-child(3)  { animation-delay: 0.60s; }
+.docCard:nth-child(4)  { animation-delay: 0.65s; }
+.docCard:nth-child(5)  { animation-delay: 0.70s; }
+.docCard:nth-child(6)  { animation-delay: 0.75s; }
+.docCard:nth-child(7)  { animation-delay: 0.80s; }
+.docCard:nth-child(8)  { animation-delay: 0.85s; }
+.docCard:nth-child(9)  { animation-delay: 0.90s; }
+.docCard:nth-child(10) { animation-delay: 0.95s; }
+.docCard:nth-child(11) { animation-delay: 1.00s; }
+.docCard:nth-child(12) { animation-delay: 1.05s; }
+.docCard:nth-child(13) { animation-delay: 1.10s; }
+.docCard:nth-child(14) { animation-delay: 1.15s; }
+.docCard:nth-child(15) { animation-delay: 1.20s; }
+.docCard:nth-child(16) { animation-delay: 1.25s; }
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  padding: 24px;
+  color: inherit;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  animation: fadeInUp 0.5s ease 0.1s both;
+  transition: box-shadow 0.3s ease;
+}
+
+.content:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+.welcomeContent {
+  animation: fadeInDown 0.5s ease both;
+}
+
+.welcomeTitle {
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.welcomeSubtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 4px 0 0;
+}
+

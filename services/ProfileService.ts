@@ -22,6 +22,7 @@ export interface StudentData {
   phoneMobile: string;
   facebook: string;
   lineId: string;
+  advisor: string;
 }
 
 export interface ApiResponse<T> {
@@ -87,7 +88,9 @@ export async function fetchStudentProfile(): Promise<ApiResponse<StudentData>> {
   return await res.json();
 }
 
-export async function updateStudent(payload: UpdateStudentPayload): Promise<ApiResponse<unknown>> {
+export async function updateStudent(
+  payload: UpdateStudentPayload,
+): Promise<ApiResponse<unknown>> {
   const base = (API_URL ?? "").replace(/\/$/, "");
   const url = `${base}/StudentManagement/update-student`;
 
@@ -124,9 +127,10 @@ export async function fetchMajorList(): Promise<ApiResponse<MajorListItem[]>> {
 
   return await res.json();
 }
-
-export default {
+const ProfileService = {
   fetchStudentProfile,
   updateStudent,
   fetchMajorList,
 };
+
+export default ProfileService;

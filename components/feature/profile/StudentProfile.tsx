@@ -1,14 +1,9 @@
 'use client'
 import { useEffect, useState } from "react";
-import type { UserInfo } from "@/lib/auth";
-import type { MajorListItem, StudentData, UpdateStudentPayload } from "@/services/ProfileService";
+import type { MajorListItem, StudentData, UpdateStudentPayload } from "@/services/profileService";
 import styles from "./StudentProfile.module.css";
-import { fetchStudentProfile, fetchMajorList, updateStudent } from "@/services/ProfileService";
-
-type Props = {
-  userInfo: UserInfo | null;
-};
-
+import { fetchStudentProfile, fetchMajorList, updateStudent } from "@/services/profileService";
+import NavigationDualBar from "@/components/layout/NavigationDualBar";
 interface EditableStudentData extends StudentData {
   majorId?: number;
 }
@@ -56,7 +51,7 @@ const ProfileField = ({ label, value, isDropdown, list, editable = false, inputT
   );
 };
 
-export default function StudentProfile({ userInfo }: Props) {
+export default function StudentProfile() {
   const [studentData, setStudentData] = useState<StudentData | null>(null);
   const [draftData, setDraftData] = useState<EditableStudentData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -206,7 +201,7 @@ export default function StudentProfile({ userInfo }: Props) {
     <div className={styles.page}>
       <section className={styles.welcomeContent}>
         <div className={styles.sectionHeader}>
-          <div className={styles.sectionHeaderContent}>
+          <div>
             <h1 className={styles.welcomeTitle}>ข้อมูลโปรไฟล์</h1>
             <p className={styles.welcomeSubtitle}>จัดการข้อมูลส่วนตัวและข้อมูลติดต่อ</p>
           </div>
@@ -214,8 +209,14 @@ export default function StudentProfile({ userInfo }: Props) {
       </section>
 
       <section className={styles.content}>
-        <section className={styles.profileContent}>
-          <div className={styles.profileCard}>
+        <section>
+          <div>
+            <NavigationDualBar
+                                        leftLabel="หน้าหลัก"
+                                        leftHref="/dashboard"
+                                        rightLabel="ข้อมูลสถานสหกิจ"
+                                        rightHref="/co-operation"
+                                    />
             <div className={styles.profileCardHeader}>
               <h2 className={styles.profileCardTitle}>ข้อมูลส่วนตัว</h2>
               {!isEditing ? (
@@ -248,7 +249,6 @@ export default function StudentProfile({ userInfo }: Props) {
                   editable={isEditing}
                   onChange={(value) => updateDraftField("lastName", value)}
                 />
-              </div>
               <div className={styles.profileCardContentRow2}>
                 <ProfileField
                   label="สาขาวิชา"
@@ -258,6 +258,7 @@ export default function StudentProfile({ userInfo }: Props) {
                   editable={isEditing}
                   onChange={(value) => updateDraftField("majorId", value)}
                 />
+              </div>
                 <ProfileField label="คณะ" value={draftData?.faculty} editable={false} />
                 <ProfileField
                   label="GPAX"
@@ -273,6 +274,7 @@ export default function StudentProfile({ userInfo }: Props) {
                   inputType="number"
                   onChange={(value) => updateDraftField("totalCredits", value)}
                 />
+                <ProfileField label="อาจารย์ที่ปรึกษา" value={draftData?.advisor} editable={false} />
               </div>
             </div>
           </div>
@@ -280,7 +282,7 @@ export default function StudentProfile({ userInfo }: Props) {
         <span className={styles.divider1}></span>
         <section className={styles.contactAndAddressContent}>
           <section className={styles.contactContent}>
-            <div className={styles.contactCard}>
+            <div>
               <h2 className={styles.contactCardTitle}>ข้อมูลติดต่อ</h2>
               <div className={styles.contactCardContent}>
                 <div className={styles.contactCardContentRow1}>
@@ -324,7 +326,7 @@ export default function StudentProfile({ userInfo }: Props) {
           </section>
           <span className={styles.divider2}></span>
           <section className={styles.AddressContent}>
-            <div className={styles.AddressCard}>
+            <div>
               <h2 className={styles.AddressCardTitle}>ที่อยู่</h2>
               <div className={styles.AddressCardContent}>
                 <div className={styles.AddressCardContentRow1}>
@@ -346,7 +348,6 @@ export default function StudentProfile({ userInfo }: Props) {
                     editable={isEditing}
                     onChange={(value) => updateDraftField("alley", value)}
                   />
-                </div>
                 <div className={styles.AddressCardContentRow2}>
                   <ProfileField
                     label="ถนน"
@@ -354,6 +355,7 @@ export default function StudentProfile({ userInfo }: Props) {
                     editable={isEditing}
                     onChange={(value) => updateDraftField("road", value)}
                   />
+                </div>
                   <ProfileField
                     label="ตำบล"
                     value={draftData?.subDistrict}

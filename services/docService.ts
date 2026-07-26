@@ -1,12 +1,13 @@
-import { getToken, getUserIdFromToken } from "./allService";
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const baseAPI = (API_URL ?? "").replace(/\/$/, "");
+export interface DocumentExistDto{
+  docTypeId:number;
+  approved:boolean;
+}
 
 export async function fetchDocument(docId: number): Promise<Blob> {
-  
-  const base = (API_URL ?? "").replace(/\/$/, "");
+  const base = baseAPI;
   const url = `${base}/TemplateDocument?docId=${encodeURIComponent(docId)}`;
-
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -20,29 +21,32 @@ export async function fetchDocument(docId: number): Promise<Blob> {
 }
 
 export async function fetchAllDocuments(): Promise<Blob> {
-    const base = (API_URL ?? "").replace(/\/$/, "");
-    const url = `${base}/AllTemplateDocument`;
-    const res = await fetch(url, {
-        method: "GET",
-        credentials: "include",
-    });
-    if (!res.ok) {
-        const text = await res.text();
-        console.error("fetchAllDocuments failed", res.status, text);
-        throw new Error(`Failed to fetch all documents: ${res.status} ${text}`);
-    }
-    return await res.blob();
+  const base = baseAPI;
+  const url = `${base}/AllTemplateDocument`;
+  const res = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("fetchAllDocuments failed", res.status, text);
+    throw new Error(`Failed to fetch all documents: ${res.status} ${text}`);
+  }
+  return await res.blob();
 }
 
-export async function uploadDocument(file: File, docId: number): Promise<string> {
-    const base = (API_URL ?? "").replace(/\/$/, "");
-    const url = `${base}/SubmitForm`;
+export async function uploadDocument(
+  file: File,
+  docId: number,
+): Promise<string> {
+  const base = baseAPI;
+  const url = `${base}/SubmitForm`;
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("docId", docId.toString());
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("docId", docId.toString());
 
-    const res = await fetch(url, {
+  const res = await fetch(url, {
     method: "POST",
     credentials: "include",
     body: formData,
@@ -55,24 +59,91 @@ export async function uploadDocument(file: File, docId: number): Promise<string>
   }
 
   return await res.text();
-
 }
+
 export async function fetchDocumentExist(): Promise<number[]> {
-    const base = (API_URL ?? "").replace(/\/$/, "");
-    const url = `${base}/DocumentInfo`;
+  const base = baseAPI;
+  const url = `${base}/DocumentInfo`;
 
-    const res = await fetch(url, {
-        method: "GET",
-        credentials: "include",
-    });
+  const res = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
 
-    if (!res.ok) {
-        const text = await res.text();
-        console.error("fetchDocumentExist failed", res.status, text);
-        throw new Error(`Failed to check document existence: ${res.status} ${text}`);
-    }
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("fetchDocumentExist failed", res.status, text);
+    throw new Error(
+      `Failed to check document existence: ${res.status} ${text}`,
+    );
+  }
 
-    return await res.json();
+  return await res.json();
+}
+export async function fetchDocumentThesisExist(): Promise<DocumentExistDto[]> {
+  const base = baseAPI;
+  const url = `${base}/GetThesisIds`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("fetchDocumentExist failed", res.status, text);
+    throw new Error(
+      `Failed to check document existence: ${res.status} ${text}`,
+    );
+  }
+
+  return await res.json();
+}
+export async function uploadReport(file: File, docId: number): Promise<string> {
+  const base = baseAPI;
+  const url = `${base}/SubmitReport`;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("docId", docId.toString());
+
+  const res = await fetch(url, {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("uploadReport failed", res.status, text);
+    throw new Error(`Failed to upload Report: ${res.status} ${text}`);
+  }
+  return await res.text();
+}
+export async function fetchReportAndThesis(docId: number): Promise<string> {
+  const base = baseAPI;
+  const url = `${base}/GetReportAndThesis?docId=${encodeURIComponent(docId)}`;
+  const res = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    console.error("fetchReportAndThesis failed", res.status, text);
+    throw new Error(`Failed to fetch report/thesis URL: ${res.status} ${text}`);
+  }
+
+  const text = await res.text();
+  return text.trim();
 }
 
-export default { fetchDocument, fetchAllDocuments, uploadDocument, fetchDocumentExist };
+const documentService = {
+  fetchDocument,
+  fetchAllDocuments,
+  uploadDocument,
+  fetchDocumentExist,
+  fetchReportAndThesis,
+  uploadReport,
+  fetchDocumentThesisExist
+};
+export default documentService;

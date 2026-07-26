@@ -59,13 +59,23 @@ export default function Navbar({ userInfo }: Props) {
   return (
     <nav className={styles.navbar}>
       <div className={styles.brand}>
-        <div className={styles.brandIcon}>
+        <button
+          type="button"
+          className={styles.brandIcon}
+          onClick={() => router.push("/dashboard")}
+          aria-label="ไปที่หน้า dashboard"
+        >
           <img src="/hat-icon-p.svg" alt="Hat Icon" className={styles.brandIconImg} />
-        </div>
-        <div className={styles.brandNameContainer}>
+        </button>
+        <button
+          type="button"
+          className={styles.brandNameContainer}
+          onClick={() => router.push("/dashboard")}
+          aria-label="กลับไปหน้า dashboard"
+        >
           <span className={styles.brandNameMain}>ระบบสหกิจศึกษา</span>
           <span className={styles.brandNameSub}>คณะวิทยาศาสตร์</span>
-        </div>
+        </button>
       </div>
       <div className={styles.navLinks}>
         <div className={styles.infoContainer}>

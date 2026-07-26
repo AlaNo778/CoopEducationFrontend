@@ -1,0 +1,344 @@
+/* ===========================
+   Fonts & Keyframes
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700&family=Sarabun:wght@400;600&display=swap');
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===========================
+   Page Layout
+=========================== */
+.page {
+  font-family: 'Prompt', 'Sarabun', sans-serif;
+  padding: 24px 7% 40px;
+  background-color: #f7f9fa;
+  min-height: 80vh;
+  box-sizing: border-box;
+  animation: fadeIn 0.85s ease-in-out both;
+}
+
+/* ===========================
+   Welcome Header
+=========================== */
+.welcomeContent {
+  animation: fadeInDown 0.9s ease-in-out both;
+}
+
+.welcomeTitle {
+  font-size: 30px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.welcomeSubtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 4px 0 0;
+}
+
+/* ===========================
+   Main Content Card
+=========================== */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #eef0f3;
+  border-radius: 14px;
+  padding: 24px;
+  color: inherit;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  animation: fadeInUp 0.9s ease-in-out 0.08s both;
+  transition: box-shadow 0.72s ease-in-out;
+}
+
+.content:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.profileCardTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.profileCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.navigationBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background-color: #f7f9fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.dashboardButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: #111827;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.7s ease-in-out, color 0.7s ease-in-out;
+}
+
+.dashboardButton:hover {
+  background-color: #eef2ff;
+  color: #4338ca;
+}
+
+.coopInfoTitle,
+.mentorInfoTitle,
+.jobInfoTitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.companyField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 220px;
+  flex: 1;
+}
+
+.companyCardContentTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+  transition: color 0.7s ease-in-out;
+}
+
+.companyCardContentInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  color: #111827;
+  box-sizing: border-box;
+  cursor: default;
+  transition: border-color 0.7s ease-in-out, background-color 0.7s ease-in-out, box-shadow 0.7s ease-in-out;
+}
+
+.companyCardContentInput:focus {
+  outline: none;
+  border-color: #6366f1;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.coopInfoContent,
+.mentorInfoContent,
+.jobInfoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.coopInfoContent,
+.mentorInfoContent {
+  flex: 1 1 0;
+  min-width: 0;
+  animation: fadeInDown 0.84s ease-in-out 0.15s both;
+}
+
+.coopInfoContentRow1,
+.coopInfoContentRow2,
+.coopInfoContentRow3,
+.coopInfoDetail,
+.mentorInfoDetail,
+.mentorInfoContentRow1,
+.mentorInfoContentRow2,
+.mentorInfoContentRow3 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  flex: 1 1 0;
+}
+
+.coopAndMentorInfo {
+  /* display: flex;
+  flex-direction: row; */
+  gap: 24px;
+  width: 100%;
+  align-items: stretch;
+  
+}
+
+
+.divider1 {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, #e5e7eb, transparent);
+  align-self: stretch;
+  animation: fadeIn 0.85s ease-in-out both;
+}
+.divider2 {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+  border: none;
+  animation: fadeIn 0.85s ease-in-out both;
+}
+
+.jobInfoDetail{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.jobInfoContentRow1,
+.jobInfoContentRow2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.editButton,
+.saveButton,
+.cancelButton {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.68s ease-in-out, box-shadow 0.68s ease-in-out, background-color 0.68s ease-in-out;
+}
+
+.editButton {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.editButton:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.16);
+}
+
+.saveButton {
+  background-color: #16a34a;
+  color: #fff;
+}
+
+.saveButton:hover {
+  background-color: #15803d;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(22, 163, 74, 0.16);
+}
+
+.cancelButton {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.cancelButton:hover {
+  background-color: #d1d5db;
+  transform: translateY(-1px);
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+.coopInfoAndbutton{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.buttonLayer{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.topButton
+{
+  display: flex;
+  flex-direction: column;
+}
+.flexInfomation{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.flexMentorInfo{
+  display: flex;
+  flex-direction: column;
+}
+.flexinfoMentorTop{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

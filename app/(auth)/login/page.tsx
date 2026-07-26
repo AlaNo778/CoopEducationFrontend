@@ -100,7 +100,7 @@ export default function LoginPage() {
             <circle cx="12" cy="7" r="4"/>
           </svg>
           {/* <input id="username" type="text" placeholder="รหัสนักศึกษา / อีเมล" value = {username} onChange={(e) => setUsername(e.target.value)} /> */}
-          <Input  id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="รหัสนักศึกษา / อีเมล" />
+          <Input  id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="รหัสนักศึกษา / ชื่อผู้ใช้งาน" />
         </div>
       </div>
 
