@@ -118,6 +118,29 @@ export async function fetchAdviseeStudents(): Promise<AdviseeStudentsDTO[]> {
 
   return result.data;
 }
+export async function fetchStudentDetail(
+  studentCode: string,
+): Promise<AdviseeStudentsDTO> {
+  const url = `${baseAPI}/GetStudentDetail?studentCode=${studentCode}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+
+    throw new Error(
+      `Failed to fetch student detail: ${response.status} ${text}`,
+    );
+  }
+
+  const result = (await response.json()) as ResponseMessage<AdviseeStudentsDTO>;
+
+  return result.data;
+}
+
 export async function fetchTeacherInfomation(): Promise<
   ResponseMessage<Teacher>
 > {
@@ -136,11 +159,33 @@ export async function fetchTeacherInfomation(): Promise<
 
   return (await response.json()) as ResponseMessage<Teacher>;
 }
+export async function fetchExistingReport(studentCode:string):Promise<number[]> {
+  const url = `${baseAPI}/GetDocWeeklyAndthesisReport?studentCode=${studentCode}`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+
+    throw new Error(
+      `Failed to fetch student detail: ${response.status} ${text}`,
+    );
+  }
+
+  const result = (await response.json())
+
+  return result;
+}
 
 const teacherService = {
   fetchStudentList,
   assignmentStudent,
   fetchAdviseeStudents,
   fetchTeacherInfomation,
+  fetchStudentDetail,
+  fetchExistingReport,
 };
 export default teacherService;

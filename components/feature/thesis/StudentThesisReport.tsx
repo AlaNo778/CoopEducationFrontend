@@ -3,12 +3,13 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import styles from "./StudentThesisReport.module.css";
 import { FaFilePdf } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
-import NavigationDualBar from "@/components/layout/NavigationDualBar";
+// import NavigationDualBar from "@/components/layout/NavigationDualBar";
 import {
   fetchReportAndThesis,
   uploadReport,
   fetchDocumentThesisExist,
   DocumentExistDto,
+  fetchExistingReplyDocStatus,
 } from "../../../services/docService";
 
 type DocItem = {
@@ -69,8 +70,8 @@ const getStatusMeta = (approved?: boolean) => {
 };
 
 async function fetchReplyDocStatus(): Promise<number[]> {
-  await new Promise((resolve) => setTimeout(resolve, 300));
-  return [51, 55];
+  const data = await fetchExistingReplyDocStatus();
+  return data;
 }
 
 export default function StudentThesisReport() {
@@ -176,7 +177,7 @@ export default function StudentThesisReport() {
       try {
         setUploadReportDocId(docId);
 
-        await uploadReport(file, docId);
+        await uploadReport(file, docId,null);
 
         await refreshUploadedDocs();
 
@@ -196,7 +197,7 @@ export default function StudentThesisReport() {
     if (!doc.docId) return;
 
     try {
-      const fileUrl = await fetchReportAndThesis(doc.docId);
+      const fileUrl = await fetchReportAndThesis(doc.docId,null);
       if (!fileUrl) {
         throw new Error("No file URL returned from backend");
       }
@@ -229,12 +230,12 @@ export default function StudentThesisReport() {
 
       <section className={styles.content}>
         <section>
-          <NavigationDualBar
+          {/* <NavigationDualBar
             leftLabel="หน้าหลัก"
             leftHref="/dashboard"
             rightLabel="ข้อมูลโปรไฟล์"
             rightHref="/profile"
-          />
+          /> */}
         </section>
         <section className={styles.contener}>
           <section className={styles.timeline}>

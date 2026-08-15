@@ -9,7 +9,7 @@ import {
   uploadReport,
   fetchDocumentExist,
 } from "../../../services/docService";
-import NavigationDualBar from "@/components/layout/NavigationDualBar";
+// import NavigationDualBar from "@/components/layout/NavigationDualBar";
 
 type DocItem = {
   key: string;
@@ -142,7 +142,7 @@ export default function StudentReport() {
 
   useEffect(() => {
     let mounted = true;
-    fetchDocumentExist()
+    fetchDocumentExist(0,null)
       .then((ids) => {
         if (mounted) setUploadedDocIds(ids);
       })
@@ -171,10 +171,10 @@ export default function StudentReport() {
       try {
         setUploadReportDocId(docId);
 
-        const result = await uploadReport(file, docId);
+        const result = await uploadReport(file, docId,null);
         console.log("Upload result:", result);
 
-        const ids = await fetchDocumentExist();
+        const ids = await fetchDocumentExist(0,null);
         setUploadedDocIds(ids);
 
         alert(`อัพโหลด "${doc.title}" สำเร็จแล้ว`);
@@ -193,7 +193,7 @@ export default function StudentReport() {
     if (!doc.docId) return;
 
     try {
-      const fileUrl = await fetchReportAndThesis(doc.docId);
+      const fileUrl = await fetchReportAndThesis(doc.docId,null);
       if (!fileUrl) {
         throw new Error("No file URL returned from backend");
       }
@@ -227,12 +227,12 @@ export default function StudentReport() {
         <section className={styles.content}>
           <section>
             <div>
-              <NavigationDualBar
+              {/* <NavigationDualBar
                 leftLabel="หน้าหลัก"
                 leftHref="/dashboard"
                 rightLabel="รูปเล่มรายงาน"
                 rightHref="/report"
-              />
+              /> */}
             </div>
           </section>
           <section className={styles.bgGrid}>

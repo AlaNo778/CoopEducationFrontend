@@ -2,7 +2,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import styles from './StudentCo-operative.module.css';
-import NavigationDualBar from '@/components/layout/NavigationDualBar';
+// import NavigationDualBar from '@/components/layout/NavigationDualBar';
 import {
     fetchCompanyList,
     fetchStudentCoopInfo,
@@ -570,12 +570,12 @@ export default function StudentCooperative() {
             <section className={styles.content}>
                 <section>
                     <div>
-                        <NavigationDualBar
+                        {/* <NavigationDualBar
                             leftLabel="หน้าหลัก"
                             leftHref="/dashboard"
                             rightLabel="นัดหมายวันนิเทศ"
                             rightHref="/#schedule"
-                        />
+                        /> */}
                     </div>
                 </section>
 

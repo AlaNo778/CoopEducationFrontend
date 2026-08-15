@@ -2,7 +2,7 @@
 import styles from "./Dashboard.module.css";
 import {
   LuFileText,
-  LuUser,
+  // LuUser,
   LuCalendarDays,
   // LuClipboardList,
   // LuBookOpen,
@@ -33,14 +33,6 @@ type Feature = {
 
 const features: Feature[] = [
   {
-    key: "profile",
-    icon: <LuUser />,
-    iconClass: "featIconBlue",
-    title: "ข้อมูลโปรไฟล์",
-    description: "จัดการข้อมูลส่วนตัวและข้อมูลติดต่อ",
-    href: "/profile",
-  },
-  {
     key: "assign-students-to-advisor",
     icon: <LuUsersRound />,
     iconClass: "featIconCyan",
@@ -55,24 +47,8 @@ const features: Feature[] = [
     iconClass: "featIconOrange",
     title: "นัดหมายวันนิเทศ",
     description: "จัดการนัดหมายการนิเทศงาน",
-    href: "#",
+    href: "/appointment",
   },
-  // {
-  //   key: "weekly-report-student",
-  //   icon: <LuClipboardList />,
-  //   iconClass: "featIconTeal",
-  //   title: "รายงานประจำสัปดาห์นักศึกษา",
-  //   description: "บันทึกและส่งรายงานการปฏิบัติงานรายสัปดาห์ของนักศึกษา",
-  //   href: "/weeklyReport-student",
-  // },
-  // {
-  //   key: "final-report",
-  //   icon: <LuBookOpen />,
-  //   iconClass: "featIconPink",
-  //   title: "รูปเล่มรายงานนักศึกษา",
-  //   description: "รูปเล่มรายงานฉบับสมบูรณ์",
-  //   href: "/report-student",
-  // },
 ];
 type DocItem = {
   key: string;
@@ -186,7 +162,7 @@ export default function TeacherDashboard({ userInfo }: Props) {
 
   useEffect(() => {
     let mounted = true;
-    fetchDocumentExist()
+    fetchDocumentExist(0,null)
       .then((ids) => {
         if (mounted) setUploadedDocIds(ids);
       })

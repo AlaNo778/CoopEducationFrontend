@@ -115,4 +115,24 @@ body{
   background: #d3d3d3;
   opacity: 0.4;
 }
+.toHome{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+/* .toHome > button:hover {
+  background-color: #c6d7fa;
 
+} */
+.navButton{
+  padding: 10px 0  10px 0;
+  /* background-color: #c6d7fa; */
+    border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease-in-out;
+}
+.navButton:hover {
+  border-bottom: 2px solid #2663eb;
+}
+.navButton > button > span {
+  font-size: 16px;
+}

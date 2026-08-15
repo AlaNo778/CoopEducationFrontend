@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import type { MajorListItem, StudentData, UpdateStudentPayload } from "@/services/profileService";
 import styles from "./StudentProfile.module.css";
 import { fetchStudentProfile, fetchMajorList, updateStudent } from "@/services/profileService";
-import NavigationDualBar from "@/components/layout/NavigationDualBar";
+// import NavigationDualBar from "@/components/layout/NavigationDualBar";
 interface EditableStudentData extends StudentData {
   majorId?: number;
 }
@@ -211,12 +211,12 @@ export default function StudentProfile() {
       <section className={styles.content}>
         <section>
           <div>
-            <NavigationDualBar
+            {/* <NavigationDualBar
                                         leftLabel="หน้าหลัก"
                                         leftHref="/dashboard"
                                         rightLabel="ข้อมูลสถานสหกิจ"
                                         rightHref="/co-operation"
-                                    />
+                                    /> */}
             <div className={styles.profileCardHeader}>
               <h2 className={styles.profileCardTitle}>ข้อมูลส่วนตัว</h2>
               {!isEditing ? (

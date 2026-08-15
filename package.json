@@ -11,6 +11,7 @@
   "dependencies": {
     "@untitledui/file-icons": "^0.0.9",
     "@untitledui/icons": "^0.0.22",
+    "date-fns": "^4.4.0",
     "motion": "^12.40.0",
     "next": "16.2.2",
     "react": "19.2.4",

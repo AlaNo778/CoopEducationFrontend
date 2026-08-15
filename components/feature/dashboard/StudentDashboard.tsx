@@ -50,7 +50,7 @@ const features: Feature[] = [
     iconClass: "featIconOrange",
     title: "นัดหมายวันนิเทศ",
     description: "จัดการนัดหมายการนิเทศงาน",
-    href: "#",
+    href: "/appointment",
   },
   {
     key: "weekly-report",
@@ -180,11 +180,15 @@ export default function StudentDashboard({ userInfo }: Props) {
         const result = await uploadDocument(file, docId);
         console.log("Upload result:", result);
 
+        const ids = await fetchDocumentExist(0,null);
+        setUploadedDocIds(ids);
+
         alert(`อัพโหลด "${doc.title}" สำเร็จแล้ว`);
       } catch (error) {
         console.error("Upload failed:", error);
         alert("อัพโหลดไม่สำเร็จ กรุณาลองใหม่");
       } finally {
+        setUploadingDocId(null);
       }
     };
 
@@ -193,7 +197,7 @@ export default function StudentDashboard({ userInfo }: Props) {
 
   useEffect(() => {
     let mounted = true;
-    fetchDocumentExist()
+    fetchDocumentExist(0,null)
       .then((ids) => {
         if (mounted) setUploadedDocIds(ids);
       })

@@ -1,39 +1,39 @@
-.page{
-  font-family: 'Prompt', 'Sarabun', sans-serif;
+.page {
+  font-family: "Prompt", "Sarabun", sans-serif;
   padding: 24px 7% 40px;
   background-color: #f7f9fa;
   min-height: 80vh;
   box-sizing: border-box;
   animation: fadeIn 0.85s ease-in-out both;
 }
-.header{
-    display: flex;
-    flex-direction: column;
-    /* margin-bottom: 100px */
+.bgcard {
+  padding: 40px 7% 40px;
+  background-color: #f7f9fa;
+  border-radius: 16px;
+
 }
-.title{
+.header {
+  display: flex;
+  flex-direction: column;
+  /* margin-bottom: 100px */
+}
+.title {
   font-size: 30px;
   font-weight: 700;
   color: #111827;
   margin: 0;
 }
-.subTitle{
-   font-size: 16px;
+.subTitle {
+  font-size: 16px;
   font-weight: 400;
   color: #6b7280;
-  margin: 4px 0 0; 
+  margin: 4px 0 0;
 }
 
-
-.assignStudentBar {
+.content {
   display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.content{
-    display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 10px;
   margin-top: 24px;
   background-color: #ffffff;
   border: 1px solid #eef0f3;
@@ -46,6 +46,77 @@
 }
 
 /* =========================================================
+   Filter bar (ฟังก์ชันที่ 1) + Assign bar (ฟังก์ชันที่ 3)
+   ========================================================= */
+.filterAndassignBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.filterSpace {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filterLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.filterSelect {
+  min-width: 400px;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #2f6fed;
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.15);
+}
+
+.filterSelect:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* เดิมเป็นแถบไอคอนเปล่า ตอนนี้ใส่ label + dropdown มอบหมายนักศึกษา + สถานะ */
+.assignStudentBar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.assignStatus {
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+.assignStatusSuccess {
+  font-size: 0.78rem;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.assignStatusError {
+  font-size: 0.78rem;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* =========================================================
    Card list — 3 การ์ดเรียงแนวนอน
    ========================================================= */
 .studentCard {
@@ -55,6 +126,15 @@
   gap: 20px;
   align-items: center;
   justify-content: center;
+  min-height: 280px;
+}
+
+.emptyState {
+  width: 100%;
+  text-align: center;
+  color: #9aa4b2;
+  font-size: 0.9rem;
+  padding: 40px 0;
 }
 
 /* =========================================================
@@ -196,7 +276,9 @@
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .btnDetail svg {
@@ -210,6 +292,49 @@
 }
 
 /* =========================================================
+   Pagination (ฟังก์ชันที่ 2)
+   ========================================================= */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pageBtn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.pageBtn:hover:not(:disabled) {
+  border-color: #2f6fed;
+  color: #2f6fed;
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtnActive {
+  background: #2f6fed;
+  border-color: #2f6fed;
+  color: #ffffff;
+}
+
+/* =========================================================
    Responsive
    ========================================================= */
 @media (max-width: 640px) {
@@ -218,5 +343,9 @@
   }
   .Card {
     width: 100%;
+  }
+  .filterAndassignBar {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

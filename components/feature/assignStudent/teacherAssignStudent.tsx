@@ -1,13 +1,16 @@
 "use client";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, type ChangeEvent } from "react";
 import styles from "./teacherAssignStudent.module.css";
 import {
   StudentList,
   AdviseeStudentsDTO,
+  AdvisorshipDTO,
   fetchStudentList,
   fetchAdviseeStudents,
+  assignmentStudent,
 } from "../../../services/teacherService";
-import NavigationDualBar from "@/components/layout/NavigationDualBar";
+// import NavigationDualBar from "@/components/layout/NavigationDualBar";
+import { useRouter } from "next/navigation";
 
 /* ---------------------------------------------------------
  * Icon placeholders (ยังไม่ใช้รูปโปรไฟล์จริง)
@@ -80,9 +83,14 @@ interface StudentCardInfo {
  * Card component (แยกออกมาเพื่อ map ใช้งานง่าย)
  * --------------------------------------------------------- */
 function StudentCard({ student }: { student: StudentCardInfo }) {
+  const router = useRouter();
+
+  const handleDetailClick = () => {
+    router.push(`/assign-student/student/${student.studentCode}`);
+  };
+
   return (
     <div className={styles.Card}>
-      {/* สถานะ - ตอนนี้ fix ค่าไว้ก่อน อนาคตค่อย map จาก field จริง (เช่นเทียบ startDate/endDate) */}
       <span className={styles.statusBadge}>{student.academicYear}</span>
 
       <div className={styles.topCanvas}></div>
@@ -109,7 +117,7 @@ function StudentCard({ student }: { student: StudentCardInfo }) {
             <IconCalendar />
             <span>{student.periodTime}</span>
           </div>
-          <button className={styles.btnDetail} type="button">
+          <button className={styles.btnDetail} type="button" onClick={handleDetailClick}>
             <IconEye />
             <span>ดูรายละเอียด</span>
           </button>
@@ -119,6 +127,13 @@ function StudentCard({ student }: { student: StudentCardInfo }) {
   );
 }
 
+const PAGE_SIZE = 3;
+
+type AssignStatus = {
+  type: "idle" | "loading" | "success" | "error";
+  message?: string;
+};
+
 /* ---------------------------------------------------------
  * Page component
  * --------------------------------------------------------- */
@@ -127,6 +142,24 @@ export default function TeacherAssignStudent() {
   const [adviseeStudent, setAdviseeStudent] = useState<AdviseeStudentsDTO[]>(
     [],
   );
+
+  // ---------- ฟังก์ชันที่ 1: filter ตามปีการศึกษา ----------
+  const [selectedYear, setSelectedYear] = useState<string>("all");
+
+  // ---------- ฟังก์ชันที่ 2: pagination (3 การ์ด/หน้า) ----------
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  // ---------- ฟังก์ชันที่ 3: มอบหมายนักศึกษา ----------
+  const [selectedStudentId, setSelectedStudentId] = useState<string>("");
+  const [assignStatus, setAssignStatus] = useState<AssignStatus>({
+    type: "idle",
+  });
+
+  // โหลดรายชื่อ advisee ใหม่ (ใช้หลังมอบหมายสำเร็จ เพื่อให้ card อัปเดตทันที)
+  const reloadAdvisees = async () => {
+    const adviseeResponse = await fetchAdviseeStudents();
+    setAdviseeStudent(adviseeResponse);
+  };
 
   // ดึงข้อมูลนักศึกษา
   useEffect(() => {
@@ -147,15 +180,49 @@ export default function TeacherAssignStudent() {
     loadData();
   }, []);
 
-  // แปลงวันที่ฝึกงาน
-  const formatPeriodTime = (startDate?: string, endDate?: string): string => {
-    if (!startDate || !endDate) {
-      return "-";
+  useEffect(() => {
+    switch (assignStatus.type) {
+      case "loading":
+        alert("กำลังบันทึก...");
+        break;
+
+      case "success":
+        alert(assignStatus.message);
+        break;
+
+      case "error":
+        alert(assignStatus.message);
+        break;
     }
-    return `${startDate} - ${endDate}`;
-  };
+  }, [assignStatus]);
 
   const studentinfo: StudentCardInfo[] = useMemo(() => {
+    const formatThaiDate = (dateStr?: string): string => {
+      if (!dateStr) {
+        return "-";
+      }
+
+      const [datePart] = dateStr.split("T");
+      const [year, month, day] = datePart.split("-");
+
+      if (!year || !month || !day) {
+        return "-";
+      }
+
+      const buddhistYear = Number(year) + 543;
+      const yearShort = String(buddhistYear).slice(-2).padStart(2, "0");
+
+      return `${day.padStart(2, "0")}/${month.padStart(2, "0")}/${yearShort}`;
+    };
+
+    const formatPeriodTime = (startDate?: string, endDate?: string): string => {
+      if (!startDate || !endDate) {
+        return "-";
+      }
+
+      return `${formatThaiDate(startDate)} - ${formatThaiDate(endDate)}`;
+    };
+
     return adviseeStudent.map((student) => ({
       fullName: `${student.firstName ?? ""} ${student.lastName ?? ""}`.trim(),
       studentCode: student.studentCode,
@@ -165,6 +232,96 @@ export default function TeacherAssignStudent() {
       academicYear: student.academicYear ?? "-",
     }));
   }, [adviseeStudent]);
+
+  /* =========================================================
+   * ฟังก์ชันที่ 1: filter ตามปีการศึกษา (academicYear)
+   * ========================================================= */
+  const academicYearOptions = useMemo(() => {
+    const years = studentinfo
+      .map((s) => s.academicYear)
+      .filter((y): y is string => !!y && y !== "-");
+    return Array.from(new Set(years)).sort();
+  }, [studentinfo]);
+
+  const filteredStudentInfo = useMemo(() => {
+    if (selectedYear === "all") return studentinfo;
+    return studentinfo.filter((s) => s.academicYear === selectedYear);
+  }, [studentinfo, selectedYear]);
+
+  const handleYearChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedYear(e.target.value);
+    setCurrentPage(1); // เปลี่ยน filter แล้วต้องกลับไปหน้า 1
+    setSelectedStudentId("");
+    setAssignStatus({ type: "idle" });
+  };
+
+  /* =========================================================
+   * ฟังก์ชันที่ 2: pagination — จำกัด 3 การ์ดต่อหน้า
+   * ========================================================= */
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredStudentInfo.length / PAGE_SIZE),
+  );
+
+  // กันหน้าเกิน (เช่น filter แล้วเหลือข้อมูลน้อยกว่าหน้าที่เคยอยู่)
+  // คำนวณ "หน้าปัจจุบันที่ปลอดภัย" ตอน render เลย แทนการ setState ใน useEffect
+  // (การ setState sync ใน effect ทำให้เกิด cascading renders โดยไม่จำเป็น —
+  // ค่านี้ derive ได้จาก currentPage/totalPages อยู่แล้ว ไม่ต้องเก็บเป็น state แยก)
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+
+  const pagedStudentInfo = useMemo(() => {
+    const start = (safeCurrentPage - 1) * PAGE_SIZE;
+    return filteredStudentInfo.slice(start, start + PAGE_SIZE);
+  }, [filteredStudentInfo, safeCurrentPage]);
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
+  };
+
+  /* =========================================================
+   * ฟังก์ชันที่ 3: มอบหมายนักศึกษา (dropdown -> เรียก API ทันที)
+   * ต้องเลือกปีการศึกษา (ไม่ใช่ "ทั้งหมด") ก่อน เพราะ AdvisorshipDTO
+   * ต้องระบุ academicYear ที่จะมอบหมายด้วย
+   * ========================================================= */
+  const handleAssignStudent = async (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedStudentId(value);
+
+    const studentId = Number(value);
+    if (!value || Number.isNaN(studentId)) return;
+
+    if (selectedYear === "all") {
+      setAssignStatus({
+        type: "error",
+        message: "กรุณาเลือกปีการศึกษาก่อนมอบหมายนักศึกษา",
+      });
+      return;
+    }
+
+    const payload: AdvisorshipDTO = {
+      studentId,
+      academicYear: selectedYear,
+    };
+
+    setAssignStatus({ type: "loading" });
+    try {
+      const res = await assignmentStudent(payload);
+      setAssignStatus({
+        type: "success",
+        message: res.message ?? "มอบหมายนักศึกษาสำเร็จ",
+      });
+      setSelectedStudentId(""); // เคลียร์ dropdown ให้เลือกคนถัดไปได้
+      await reloadAdvisees(); // รีเฟรชการ์ดให้เห็นนักศึกษาที่เพิ่งมอบหมาย
+    } catch (error) {
+      console.error("Assign student error:", error);
+      setAssignStatus({
+        type: "error",
+        message:
+          error instanceof Error ? error.message : "มอบหมายนักศึกษาไม่สำเร็จ",
+      });
+    }
+  };
 
   return (
     <div className={styles.page}>
@@ -178,29 +335,125 @@ export default function TeacherAssignStudent() {
       </div>
       <div className={styles.content}>
         <section>
-          <div>
+          {/* <div>
             <NavigationDualBar
               leftLabel="หน้าหลัก"
               leftHref="/dashboard"
               rightLabel="นัดหมายวันนิเทศ"
               rightHref="/#schedule"
             />
-          </div>
+          </div> */}
         </section>
+
         <section className={styles.filterAndassignBar}>
-            <div className={styles.filterSpace}>
-                {/* เพิ่มส่วนของปุ่ม filter โดยฟิลเตอร์ใช้ academicYear */}
-            </div>
-            <section className={styles.assignStudentBar}>
-                ?
-            </section>
+          {/* ---------- ฟังก์ชันที่ 1: filter ---------- */}
+          <div className={styles.filterSpace}>
+            <label htmlFor="yearFilter" className={styles.filterLabel}>
+              ปีการศึกษา
+            </label>
+            <select
+              id="yearFilter"
+              className={styles.filterSelect}
+              value={selectedYear}
+              onChange={handleYearChange}
+            >
+              <option value="all">ทั้งหมด</option>
+              {academicYearOptions.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* ---------- ฟังก์ชันที่ 3: มอบหมายนักศึกษา ---------- */}
+          <section className={styles.assignStudentBar}>
+            <label htmlFor="assignStudent" className={styles.filterLabel}>
+              มอบหมายนักศึกษา (เลือกปีการศึกษาก่อนเพื่อมอบหมายนักศึกษา)
+            </label>
+            <select
+              id="assignStudent"
+              className={styles.filterSelect}
+              value={selectedStudentId}
+              onChange={handleAssignStudent}
+              disabled={
+                selectedYear === "all" || assignStatus.type === "loading"
+              }
+            >
+              <option value="" disabled>
+                เลือกนักศึกษา...
+              </option>
+              {studentList.map((student) => (
+                <option key={student.studentId} value={student.studentId}>
+                  {student.firstName} {student.lastName}
+                </option>
+              ))}
+            </select>
+            {/* {assignStatus.type === "loading" && (
+              <span className={styles.assignStatus}>กำลังบันทึก...</span>
+            )}
+            {assignStatus.type === "success" && (
+              <span className={styles.assignStatusSuccess}>
+                {assignStatus.message}
+              </span>
+            )}
+            {assignStatus.type === "error" && (
+              <span className={styles.assignStatusError}>
+                {assignStatus.message}
+              </span>
+            )} */}
+          </section>
         </section>
-        <section className={styles.studentCard}>
-          {studentinfo.map((student, index) => (
-            <StudentCard key={student.studentCode ?? index} student={student} />
+        <div className={styles.bgcard}>
+          <section className={styles.studentCard}>
+            {pagedStudentInfo.length === 0 ? (
+              <p className={styles.emptyState}>
+                ไม่พบข้อมูลนักศึกษาในปีการศึกษานี้
+              </p>
+            ) : (
+              pagedStudentInfo.map((student, index) => (
+                <StudentCard
+                  key={student.studentCode ?? index}
+                  student={student}
+                />
+              ))
+            )}
+          </section>
+        </div>
+
+        {/* ---------- ฟังก์ชันที่ 2: pagination ---------- */}
+        <div className={styles.pagination}>
+          <button
+            type="button"
+            className={styles.pageBtn}
+            onClick={() => goToPage(safeCurrentPage - 1)}
+            disabled={safeCurrentPage === 1}
+          >
+            ก่อนหน้า
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              type="button"
+              className={`${styles.pageBtn} ${
+                page === safeCurrentPage ? styles.pageBtnActive : ""
+              }`}
+              onClick={() => goToPage(page)}
+            >
+              {page}
+            </button>
           ))}
-        </section>
-        <div className={styles.pagination}></div>
+
+          <button
+            type="button"
+            className={styles.pageBtn}
+            onClick={() => goToPage(safeCurrentPage + 1)}
+            disabled={safeCurrentPage === totalPages}
+          >
+            ถัดไป
+          </button>
+        </div>
       </div>
     </div>
   );
